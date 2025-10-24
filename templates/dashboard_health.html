@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Health Dashboard</h2>
+<div class="grid">
+  <div class="card">
+    <h3>Water Tracker</h3>
+    <div class="water-ui">
+      <div id="bottle" class="bottle">
+        <div id="fill" class="fill" style="height:0%"></div>
+      </div>
+      <div class="water-controls">
+        <button class="btn" data-amt="250">+250ml</button>
+        <button class="btn" data-amt="200">+200ml</button>
+        <button class="btn" data-amt="500">+500ml</button>
+        <div>Today's: <span id="today-ml">0</span> ml</div>
+        <div>Goal: <span id="goal-ml">2000</span> ml</div>
+
+
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Tablet Reminder</h3>
+    <form id="tablet-form">
+      <input id="t-name" placeholder="Name" required />
+      <input id="t-dosage" placeholder="Dosage" />
+      <input id="t-time" type="time" placeholder="" />
+    
+      <button class="btn" type="submit">Add</button>
+    </form>
+    <ul style="margin-left: 15px;" id="tablets-list"></ul>
+
+  </div>
+
+  <div class="card">
+    <h3>Blood Glucose</h3>
+    <form id="glucose-form">
+      <input id="g-value" placeholder="mg/dL" required />
+      <button class="btn" type="submit">Add</button>
+    </form>
+    <canvas id="glucose-chart" width="400" height="200"></canvas>
+  </div>
+
+<!-- Blood Pressure Tracker -->
+<div class="card">
+  <h3>Blood Pressure</h3>
+  <form id="bp-form">
+    <input type="number" id="bp-systolic" placeholder="Systolic (mmHg)" required>
+    <input type="number" id="bp-diastolic" placeholder="Diastolic (mmHg)" required>
+    <button type="submit" class="btn">Add</button>
+  </form>
+  <canvas id="bp-chart" width="400" height="200"></canvas>
+</div>
+
+
+ 
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/health.js') }}"></script>
+{% endblock %}

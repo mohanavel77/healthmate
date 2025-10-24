@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card auth">
+  <h2>Signup</h2>
+  <form method="post" action="{{ url_for('signup') }}">
+    <input name="username" placeholder="Username" required />
+    <input name="password" placeholder="Password" type="password" required />
+    <input name="age" placeholder="Age" />
+   <select name="gender" id="">
+      <option value="">Select Gender</option>
+      <option value="male">Male</option>  
+      <option value="female">Female  </option>
+      <option value="other">Other</option>   
+    </select>
+    <input name="height" placeholder="Height (cm)" />
+    <input name="weight" placeholder="Weight (kg)" />
+    <input name="goal" placeholder="Goal (e.g., lose 5kg)" />
+    
+    <button class="btn" type="submit">Create</button>
+  </form>
+</div>
+{% endblock %}

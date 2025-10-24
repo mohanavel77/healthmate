@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Leaderboard</h2>
+<table class="leaderboard">
+  <thead><tr><th>Rank</th><th>User</th><th>Score</th></tr></thead>
+  <tbody id="leaderboard-body"></tbody>
+</table>
+{% endblock %}
+{% block scripts %}
+<script>
+fetch('/api/leaderboard').then(r=>r.json()).then(data=>{
+  const body = document.getElementById('leaderboard-body');
+  data.forEach((u,i)=>{
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${i+1}</td><td>${u.username}</td><td>${u.score}</td>`;
+    body.appendChild(tr);
+  });
+});
+</script>
+{% endblock %}

@@ -1,0 +1,7 @@
+{
+  "work_dir": "/mnt/data/health_fitness_app_unpacked",
+  "tree": "health_fitness_app_unpacked/\n  - app.py\n  - schema.sql\n  templates/\n    - base.html\n    - dashboard_fitness.html\n    - dashboard_health.html\n    - index.html\n    - leaderboard.html\n    - login.html\n    - profile.html\n    - signup.html\n  static/\n    css/\n      - style.css\n    js/\n      - fitness.js\n      - health.js\n      - main.js",
+  "detected": [
+    "python"
+  ]
+}

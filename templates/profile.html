@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Profile</h2>
+<div class="card">
+  <form method="post">
+    <input name="username" value="{{ user.username or '' }}" placeholder="Username" required />
+    <input name="age" value="{{ user.age or '' }}" placeholder="Age" />
+    <input name="gender" value="{{ user.gender or '' }}" placeholder="Gender" />
+    <input name="height" value="{{ user.height or '' }}" placeholder="Height (cm)" />
+    <input name="weight" value="{{ user.weight or '' }}" placeholder="Weight (kg)" />
+    <input name="goal" value="{{ user.goal or '' }}" placeholder="Goal" />
+    
+    <button class="btn" type="submit">Save</button>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Healthmate   </title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+
+  <body>
+    <!-- ===== NAVBAR ===== -->
+    <nav class="nav" style="align-items: center;">
+      <div class="logo">
+        <a class="brand" href="{{ url_for('index') }}">HealthMate</a>
+        <p class="subtitle">Health & Fitness Tracker </p>
+      </div>
+
+      <!-- Hamburger (for mobile) -->
+      <div class="hamburger" onclick="toggleSidebar()">&#9776;</div>
+
+      <div class="nav-right">
+        {% if session.username %}
+          <a href="{{ url_for('health_dashboard') }}" class="btn">Health</a>
+          <a href="{{ url_for('fitness_dashboard') }}" class="btn">Fitness</a>
+          <a href="{{ url_for('leaderboard_page') }}" class="btn">Leaderboard</a>
+          <a href="{{ url_for('profile') }}" class="btn">Profile</a>
+          <a href="{{ url_for('logout') }}" class="btn">Logout</a>
+        {% else %}
+          <a href="{{ url_for('login') }}" class="btn">Login</a>
+          <a href="{{ url_for('signup') }}" class="btn">Signup</a>
+        {% endif %}
+      </div>
+    </nav>
+
+    <!-- ===== SIDEBAR (for phones) ===== -->
+    <div class="sidebar" id="sidebar">
+      <a href="javascript:void(0)" class="closebtn" onclick="toggleSidebar()">&times;</a>
+      {% if session.username %}
+        <a href="{{ url_for('health_dashboard') }}">Health</a>
+        <a href="{{ url_for('fitness_dashboard') }}">Fitness</a>
+        <a href="{{ url_for('leaderboard_page') }}">Leaderboard</a>
+        <a href="{{ url_for('profile') }}">Profile</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+      {% else %}
+        <a href="{{ url_for('login') }}">Login</a>
+        <a href="{{ url_for('signup') }}">Signup</a>
+      {% endif %}
+    </div>
+
+    <!-- ===== PAGE CONTENT ===== -->
+    <main class="container">
+      {% block content %}{% endblock %}
+    </main>
+
+    <!-- ===== AI CHAT WIDGET ===== -->
+    <div id="ai-chat">
+      <button id="chat-toggle" class="btn">Chat with Ai</button>
+      <div id="chat-window" class="hidden">
+        <button id="chat-close" aria-label="close">✕</button>
+        <div id="chat-messages"></div>
+        <form id="chat-form" class="chat-form">
+          <input id="chat-input" type="text" placeholder="Ask about workouts, nutrition, or your app data..." autocomplete="off" />
+          <button type="submit" class="btn">Send</button>
+        </form>
+      </div>
+    </div>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/chat.css') }}">
+    <script src="{{ url_for('static', filename='js/chatbox.js') }}"></script>
+
+    <footer class="footer">Made with ❤️ — Healthmate</footer>
+
+    <!-- ===== JS ===== -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+    <!-- ===== TOGGLE SIDEBAR JS ===== -->
+    <script>
+      function toggleSidebar() {
+        const sidebar = document.getElementById("sidebar");
+        sidebar.classList.toggle("active");
+      }
+    </script>
+
+    {% block scripts %}{% endblock %}
+  </body>
+</html>

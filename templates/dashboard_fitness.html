@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Fitness Dashboard</h2>
+<div class="grid">
+  <div class="card">
+    <h3>Calorie Calculator</h3>
+    <form id="cal-form">
+      <input id="cal-age" placeholder="Age" />
+      <input id="cal-gender" placeholder="Gender (male/female)" />
+      <input id="cal-weight" placeholder="Weight (kg)" />
+      <input id="cal-height" placeholder="Height (cm)" />
+      <select id="cal-activity">
+        <option value="1.2">Sedentary</option>
+        <option value="1.375">Light</option>
+        <option value="1.55">Moderate</option>
+        <option value="1.725">Active</option>
+      </select>
+      <button class="btn" type="button" id="calc-calories">Calculate</button>
+    </form>
+    <div id="cal-result"></div>
+  </div>
+
+  <div class="card">
+    <h3>Weight Tracker</h3>
+    <form id="weight-form">
+      <input id="w-value" placeholder="Weight (kg)" />
+      <button class="btn" type="submit">Add</button>
+    </form>
+    <canvas id="weight-chart" width="400" height="200"></canvas>
+  </div>
+
+  <div class="card">
+    <h3>Basic Workouts</h3>
+    <ul style="margin-left:20px ;">
+       <li>Plank ——————<button class="btn start-workout" data-name="Plank">Start</button></li>
+       <li>Jumping Jacks —— <button class="btn start-workout" data-name="Jacks">Start</button></li>
+       <li>Squats ————— <button class="btn start-workout" data-name="Squats">Start</button></li>
+    </ul>
+    <center><div style="border: 5px solid #4facfc;  border-radius: 20px; " id="workout-timer" ><h3 >00:00</h3></div></center>
+    <button class="btn stop-workout" id="stop-workout">Stop</button>
+    <button class="btn reset-workout" id="reset-timer">Reset</button>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/fitness.js') }}"></script>
+{% endblock %}
