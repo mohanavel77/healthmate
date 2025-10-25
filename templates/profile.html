@@ -4,6 +4,7 @@
 <div class="card">
   <form method="post">
     <input name="username" value="{{ user.username or '' }}" placeholder="Username" required />
+    <input name="phone" value="{{ user.phone or '' }}" placeholder="Phone Number (with country code)" required />
     <input name="age" value="{{ user.age or '' }}" placeholder="Age" />
     <input name="gender" value="{{ user.gender or '' }}" placeholder="Gender" />
     <input name="height" value="{{ user.height or '' }}" placeholder="Height (cm)" />

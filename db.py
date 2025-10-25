@@ -1,7 +1,7 @@
 import sqlite3
 
-conn = sqlite3.connect('health_fitness.db')
-with open('schema.sql') as f:
-    conn.executescript(f.read())
+conn = sqlite3.connect("your_database.db")
+cursor = conn.cursor()
+cursor.execute("ALTER TABLE users ADD COLUMN phone TEXT;")
 conn.commit()
 conn.close()

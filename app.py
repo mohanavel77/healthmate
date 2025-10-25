@@ -17,13 +17,7 @@ app.secret_key = "change_this_secret_for_production"
 openai.api_key = os.getenv("OPENAI_API_KEY")
 OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
 
-# Twilio credentials (set as environment variables!)
-TWILIO_SID = os.getenv("TWILIO_SID")
-TWILIO_AUTH = os.getenv("TWILIO_AUTH")
-TWILIO_FROM = "whatsapp:+13262010859"  # Twilio Sandbox number
-twilio_client = Client(TWILIO_SID, TWILIO_AUTH)
-print(os.getenv("TWILIO_SID"))
-print(os.getenv("TWILIO_AUTH"))
+
 
 scheduler = BackgroundScheduler()
 scheduler.start()
@@ -75,6 +69,7 @@ def signup():
     if request.method == 'POST':
         username = request.form['username'].strip()
         password = request.form['password']
+        phone = request.form.get('phone')
         age = request.form.get('age')
         gender = request.form.get('gender')
         height = request.form.get('height')
@@ -87,8 +82,8 @@ def signup():
         if cur.fetchone():
             return "User exists", 400
         pw_hash = generate_password_hash(password)
-        db.execute("INSERT INTO users (username, password_hash, age, gender, height, weight, goal, photo, created_at) VALUES (?,?,?,?,?,?,?,?,?)",
-                   (username, pw_hash, age, gender, height, weight, goal, photo, datetime.utcnow()))
+        db.execute("INSERT INTO users (username , password_hash, phone , age, gender, height, weight, goal, photo, created_at) VALUES (?,?,?,?,?,?,?,?,?,?)",
+                   (username, pw_hash, phone , age, gender, height, weight, goal, photo, datetime.utcnow()))
         db.commit()
         return redirect(url_for('login'))
     return render_template('signup.html')
@@ -143,15 +138,17 @@ def fitness_dashboard():
 def profile():
     db = get_db()
     uid = session['user_id']
+
     if request.method == 'POST':
+        phone = request.form.get('phone')
         age = request.form.get('age')
         gender = request.form.get('gender')
         height = request.form.get('height')
         weight = request.form.get('weight')
         goal = request.form.get('goal')
         photo = request.form.get('photo')
-        db.execute("UPDATE users SET age=?, gender=?, height=?, weight=?, goal=?, photo=? WHERE id=?",
-                   (age, gender, height, weight, goal, photo, uid))
+        db.execute("UPDATE users SET phone=?, age=?, gender=?, height=?, weight=?, goal=?, photo=? WHERE id=?",
+                   (phone ,age, gender, height, weight, goal, photo, uid))
         db.commit()
         return redirect(url_for('profile'))
     cur = db.execute("SELECT * FROM users WHERE id=?", (uid,))
@@ -315,12 +312,7 @@ def api_chat():
 
 
 # ================= REMINDER API (NEW) =================
-def send_whatsapp_message(to, message):
-    twilio_client.messages.create(
-        from_=TWILIO_FROM,
-        body=message,
-        to=f'whatsapp:{to}'
-    )
+
 
 def schedule_reminder(reminder_id, phone, tablet_name, time_str, days):
     now = datetime.now()
@@ -330,7 +322,7 @@ def schedule_reminder(reminder_id, phone, tablet_name, time_str, days):
     for i in range(days):
         run_time = reminder_time + timedelta(days=i)
         scheduler.add_job(
-            send_whatsapp_message,
+    
             'date',
             run_date=run_time,
             args=[phone, f"💊 Reminder: Take your tablet {tablet_name}"]
