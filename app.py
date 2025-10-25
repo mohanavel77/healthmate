@@ -7,7 +7,7 @@ import openai
 
 # Extra imports for reminders
 from apscheduler.schedulers.background import BackgroundScheduler
-from twilio.rest import Client
+
 
 DATABASE = 'health_fitness.db'
 app = Flask(__name__, static_folder="static", template_folder="templates")
@@ -151,7 +151,7 @@ def profile():
                    (phone ,age, gender, height, weight, goal, photo, uid))
         db.commit()
         return redirect(url_for('profile'))
-    cur = db.execute("SELECT * FROM users WHERE id=?", (uid,))
+    cur = db.execute("SELECT * FROM users WHERE id=?", (uid,)) 
     user = cur.fetchone()
     return render_template('profile.html', user=user)
 
@@ -184,10 +184,12 @@ def api_tablet():
         name = request.json.get('name')
         dosage = request.json.get('dosage')
         time = request.json.get('time')
+        
         db.execute("INSERT INTO tablets (user_id, name, dosage, time, added_at) VALUES (?,?,?,?,?)",
                    (uid, name, dosage, time, datetime.utcnow()))
         db.commit()
         return jsonify(success=True)
+        
     else:
         cur = db.execute("SELECT * FROM tablets WHERE user_id=?", (uid,))
         return jsonify([dict(r) for r in cur.fetchall()])
