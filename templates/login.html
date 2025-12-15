@@ -5,6 +5,9 @@
   <form method="post" action="{{ url_for('login') }}">
     <input name="username" placeholder="Username" required />
     <input name="password" placeholder="Password" type="password" required />
+    {% if error %}
+  <p class="error-text">{{ error }}</p>
+    {% endif %}
     <button class="btn" type="submit">Login</button>
   </form>
   <p>New? <a href="{{ url_for('signup') }}">Create account</a></p>

@@ -91,6 +91,8 @@ def signup():
 
 @app.route('/login', methods=['GET','POST'])
 def login():
+    error = None
+    
     if request.method == 'POST':
         username = request.form['username'].strip()
         password = request.form['password']
@@ -101,8 +103,10 @@ def login():
             session['user_id'] = user['id']
             session['username'] = user['username']
             return redirect(url_for('health_dashboard'))
-        return "Invalid credentials", 401
-    return render_template('login.html')
+        else:
+            error = "Invalid credentials"
+        
+    return render_template('login.html',error = error)
 
 
 @app.route('/logout')

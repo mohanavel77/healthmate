@@ -39,6 +39,12 @@ body {
   text-decoration: none;
   font-size: 36px;
 }
+.error-text {
+    color: red;
+    font-size: 0.85rem;
+    margin-top: 4px;
+}
+
 
 .nav-right {
   display: flex;
